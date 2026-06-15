@@ -115,3 +115,4 @@ hydra/
     ├── scoring/           ← (vide — extraction candidats au Sprint 3)
     └── export/            ← (vide — PDF/CSV au Sprint 4)
 ```
+> Note : Pipeline CI/CD validée avec succès !
