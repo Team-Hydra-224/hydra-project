@@ -1,0 +1,25 @@
+name: Intégration Continue (CI) - HYDRA
+
+# 1. Déclencheurs : Quand est-ce que cette pipeline doit tourner ?
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    name: Tester la construction Docker
+    # 2. L'environnement : On demande à GitHub de nous prêter un serveur Linux vierge
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape A : Le serveur télécharge ton code source
+      - name: Récupération du code (Checkout)
+        uses: actions/checkout@v4
+
+      # Étape B : Le serveur lance exactement la même commande que toi tout à l'heure
+      - name: Build de l'image Docker
+        run: docker build -t hydra-app .
