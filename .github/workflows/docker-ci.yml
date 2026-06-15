@@ -1,6 +1,5 @@
-name: Intégration Continue (CI) - HYDRA
+name: Intégration et Déploiement Continus (CI/CD) - HYDRA
 
-# 1. Déclencheurs : Quand est-ce que cette pipeline doit tourner ?
 on:
   push:
     branches:
@@ -10,16 +9,32 @@ on:
       - main
 
 jobs:
-  build-and-test:
-    name: Tester la construction Docker
-    # 2. L'environnement : On demande à GitHub de nous prêter un serveur Linux vierge
+  build-and-publish:
+    name: Construire et Publier l'image Docker
     runs-on: ubuntu-latest
 
+    # 1. On donne au serveur les droits d'écriture sur le registre de ton dépôt
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      # Étape A : Le serveur télécharge ton code source
-      - name: Récupération du code (Checkout)
+      - name: Récupération du code source
         uses: actions/checkout@v4
 
-      # Étape B : Le serveur lance exactement la même commande que toi tout à l'heure
-      - name: Build de l'image Docker
-        run: docker build -t hydra-app .
+      # 2. Le serveur s'authentifie sur le GitHub Container Registry (GHCR)
+      - name: Connexion au registre GitHub (GHCR)
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      # 3. Construction et envoi de l'image
+      - name: Build et Push
+        run: |
+          # Astuce réseau : Docker exige des adresses en minuscules. 
+          # On convertit automatiquement le nom de ton dépôt (Team-Hydra-224...) en minuscules.
+          IMAGE_ID=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+
+          echo "Construction de l'image : $IMAGE_ID:latest"
+          docker build -t $IMAGE_ID:latest .
+
+          echo "Envoi de l'image sur le registre..."
+          docker push $IMAGE_ID:latest
