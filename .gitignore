@@ -1,0 +1,22 @@
+# Environnements virtuels
+venv/
+env/
+.venv/
+
+# Fichiers cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Fichiers de configuration locaux ou sensibles
+.env
+.streamlit/secrets.toml
+
+# Base de données locale (si vous utilisez SQLite pour vos tests)
+*.db
+*.sqlite3
+
+# Fichiers générés par l'OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,16 @@
+# Environnements virtuels
+venv/
+env/
+.venv/
+
+# Dossier Git
+.git/
+.gitignore
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# README et documentation (optionnel, mais allège l'image)
+README.md
+CONTEXTE_HYDRA.md
