@@ -1,0 +1,15 @@
+# HYDRA — Dépendances (squelette + GEE + exports PDF/Excel)
+# Installer avec : pip install -r requirements.txt
+
+streamlit==1.40.0
+folium==0.18.0
+streamlit-folium==0.23.0
+pandas==2.2.3
+
+# Google Earth Engine
+earthengine-api==1.4.3
+
+# Exports rapport PDF + plan de situation + Excel
+reportlab==4.2.5
+matplotlib==3.9.2
+openpyxl==3.1.5
